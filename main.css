@@ -1,12 +1,12 @@
-:root {
-  --mainColor: red;
-}
 
 body {
   align-items: center;
   display: flex;
   font-family: 'Montserrat', sans-serif;
   background-color: white;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px red;
+   cursor:url("http://www.rw-designer.com/cursor-extern.php?id=63797"), auto;
 }
 
 a:hover {
@@ -19,16 +19,6 @@ a {
   -webkit-text-stroke: 1px var(--mainColor);
 }
 
-@supports not(-webkit-text-stroke: 2px red) {
-  a {
-    text-shadow:
-      3px 3px 0 var(--mainColor),
-      -1px -1px 0 var(--mainColor),
-      1px -1px 0 var(--mainColor),
-      -1px 1px 0 var(--mainColor),
-      1px 1px 0 var(--mainColor);
-  }
-}
 .full {
   width: 100%;
 }

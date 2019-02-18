@@ -2,7 +2,7 @@
 
 var audioMp3 = new Audio();
 audioMp3.src = 'http://garnet.krlx.org:8000/krlx';
-var colors =["red", "blue", "green", "yellow", "pink", "purple", "black", "orange"]
+var colors = ["red", "blue", "green", "maroon", "olive", "fuchsia", "lime", "teal", "aqua", "navy", "DeepPink", "purple", "black", "orange"];
 document.documentElement.style.setProperty('--mainColor', colors[Math.floor(Math.random()*colors.length)]);
 function playAudio(){
 	audioMp3.play();
@@ -23,6 +23,4 @@ function pauseAudio(){
 		play[i].innerHTML = "play the radio";
 	}
 document.documentElement.style.setProperty('--mainColor', colors[Math.floor(Math.random()*colors.length)]);
-
 }
-
