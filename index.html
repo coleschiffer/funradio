@@ -23,7 +23,9 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
     return response.json();
   }).then(function(data) {
   	info = data;
+  	console.log(data);
   	  setInterval(recheck(), 60);
+  	  document.getElementById("now").innerHTML = currentShow(data);
   });
   function displaySongs(data,count) {
   	var songs = data.songs;
@@ -36,18 +38,29 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
   	return songtext;
   }
   function recheck() {
+  	fetch('https://cors-anywhere.herokuapp.com/http://signage.krlx.org')
+	  .then(function(response) {
+	    return response.json();
+	  }).then(function(data) {
+	  	  info = data;
+	  });
   	var tempsave = displaySongs(info,count);
-  	if(tempsave.localeCompare(currentSongs)!=0){
+  	if(tempsave.localeCompare(currentSongs)!= 0){
   		console.log("yes")
   		currentSongs = tempsave;
   		document.getElementById("songs").innerHTML = currentSongs;
   		}
 	}
-	function displayShows(data) {
-
+	function currentShow(data) {
+		var djs = "";
+		for (var i = data.now.djs.length - 1; i >= 0; i--) {
+			djs = djs + " " + data.now.djs[i];
+		}
+		var djtext =  djs + '<h1 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h1>";
   	return djtext;
   }
-  function recheck() {
+  function newshowCheck() {
+	  
   	var tempsave = displaySongs(info,count);
   	if(tempsave != currentSongs){
   		currentSongs = tempsave;
@@ -63,8 +76,8 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
 	<marquee direction="up" style="text-align: center; " scrollamount="1.65">
 		<h3 class="dogood" id="songs"></h3>
 	</marquee>
-	<marquee direction="down" style="text-align: center; " scrollamount="1.65">
-		<h3 class="dogood" id="dj"></h3>
+	<marquee direction="down" style="text-align: left; " scrollamount="1.65">
+		<h2 class="dogood" id="now"></h2>
 	</marquee>
 </div>
 
@@ -95,7 +108,8 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
 <br>   
 
     </div>
-<div><a class="stop" id="louder" onclick="louder()" style="display: none; font-size: 1em;">louder</a>
+<div style="right: 10px; position: fixed;">
+	<a class="stop" id="louder" onclick="louder()" style="display: none; font-size: 1em;">louder</a>
 	<br>
 <a class="stop" id="stopper" onclick="pauseAudio()" style="display: none;">pause</a>
 <br>
