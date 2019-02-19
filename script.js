@@ -2,7 +2,7 @@ var info;
 var count = 5;
 var currentSongs = "";
 var currentDjs = "";
-start()
+var live = true;
 function start() {
 	fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
   .then(function(response) {
@@ -13,6 +13,7 @@ function start() {
   .then(function(response) {
       return response.json();
   }).then(function(data) {
+  	console.log(data);
   	  info = data;
 	  document.getElementById("songs").innerHTML = displaySongs(info,count);
   	  document.getElementById("now").innerHTML = currentShow(data);
@@ -43,14 +44,14 @@ function recheck() {
 		currentSongs = tempsave;
 		document.getElementById("songs").innerHTML = currentSongs;
 		}
-}, 10000);
+}, 30000);
 }
 function currentShow(data) {
 	var djs = "";
 	for (var i = data.now.djs.length - 1; i >= 0; i--) {
 		djs = djs + " " + data.now.djs[i];
 	}
-	var djtext =  djs + '<h2 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h2>";
+	var djtext =  "<em> now - " + display24HourTimeAs12Hour(data.now.end) + "</em><br>"+ djs + '<h2 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h2>";
 	return djtext;
 }
 function newshowCheck() {
@@ -101,4 +102,20 @@ function louder() {
 		if(audioMp3.volume != 1) {
 		audioMp3.volume = audioMp3.volume +.1;
 	}
+}
+function display24HourTimeAs12Hour(time) {
+	var pm = false;
+	var timeComponents = time.split(":");
+	var hour = parseInt(timeComponents[0]);
+	
+	if(hour >= 24) hour -= 24;
+	if(hour >= 12) {
+		pm = true;
+		hour -= 12;
+	}
+	if(hour == 0) hour = 12;
+	timeComponents[0] = hour.toString();
+	
+	var returnString = timeComponents.join(":");
+	return returnString + " " + (pm ? "pm" : "am");
 }
