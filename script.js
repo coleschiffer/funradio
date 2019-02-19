@@ -15,8 +15,10 @@ function start() {
   }).then(function(data) {
   	console.log(data);
   	  info = data;
+  	  var shows = currentShow(info);
 	  document.getElementById("songs").innerHTML = displaySongs(info,count);
-  	  document.getElementById("now").innerHTML = currentShow(data);
+  	  document.getElementById("now").innerHTML = shows[0];
+  	  document.getElementById("next").innerHTML = shows[1];
   	  recheck();
   });
 }
@@ -48,10 +50,22 @@ function recheck() {
 }
 function currentShow(data) {
 	var djs = "";
+	var djtext = ["",""];
 	for (var i = data.now.djs.length - 1; i >= 0; i--) {
 		djs = djs + " " + data.now.djs[i];
 	}
-	var djtext =  "<em> now - " + display24HourTimeAs12Hour(data.now.end) + "</em><br>"+ djs + '<h2 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h2>";
+	djs
+	djtext[0] = '<h2 style="padding: 0px;margin: 0px;" class="dogood"><h2 style="padding: 0px;margin: 0px;"" class="dogood">' + data.now.title + "</h2>"+ djs + "<br><em>now - " + display24HourTimeAs12Hour(data.now.end) + "</em></h2>";
+	djs = "";
+	for (var i = data.next[0].djs.length - 1; i >= 0; i--) {
+		djs = djs + " " + data.next[0].djs[i];
+	}
+	djtext[1] =  '<h3 style="padding: 0px;margin: 0px;" class="dogood" ><em>from ' + display24HourTimeAs12Hour(data.next[0].start) + " to " + display24HourTimeAs12Hour(data.next[0].end) + "</em><br>"+ djs + '<br>'+ data.next[0].title + "</h2></h3>";
+	djs = "";
+	for (var i = data.next[1].djs.length - 1; i >= 0; i--) {
+		djs = djs + " " + data.next[1].djs[i];
+	}
+	djtext[1] =  "<em>from " + display24HourTimeAs12Hour(data.next[1].start) + " to " + display24HourTimeAs12Hour(data.next[1].end) + "</em><br>"+ djs + '<br>'+ data.next[1].title + "</h2>" + djtext[1];
 	return djtext;
 }
 function newshowCheck() {
