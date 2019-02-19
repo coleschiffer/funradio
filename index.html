@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="script.js"></script>
 	<script type="text/javascript">
 var info;
-var count = 5;
+var count = 3;
 var currentSongs = "";
 var currentDjs = "";
 fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
@@ -32,7 +32,7 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
   	var i = 0;
   	var songtext = "";
   	while(i < count) {
-  		songtext = songtext + (i+1) + ".  " + songs[i].title + " by " + songs[i].artist + "<br>";
+  		songtext = songtext + songs[i].title + " by " + songs[i].artist + "<br>";
   		i++;
   	}
   	return songtext;
