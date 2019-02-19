@@ -56,7 +56,7 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
 		for (var i = data.now.djs.length - 1; i >= 0; i--) {
 			djs = djs + " " + data.now.djs[i];
 		}
-		var djtext =  djs + '<h1 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h1>";
+		var djtext =  djs + '<h2 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h2>";
   	return djtext;
   }
   function newshowCheck() {
