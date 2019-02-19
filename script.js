@@ -2,7 +2,9 @@ var info;
 var count = 5;
 var currentSongs = "";
 var currentDjs = "";
-fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
+start()
+function start() {
+	fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
   .then(function(response) {
     return response.json();
   }).then(function(data) {
@@ -16,6 +18,8 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
   	  document.getElementById("now").innerHTML = currentShow(data);
   	  recheck();
   });
+}
+
 function displaySongs(data,count) {
   	var songs = data.songs;
   	var i = 0;
