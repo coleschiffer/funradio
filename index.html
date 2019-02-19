@@ -7,80 +7,16 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<script type="text/javascript" src="script.js"></script>
-	<script type="text/javascript">
-var info;
-var count = 5;
-var currentSongs = "";
-var currentDjs = "";
-fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
-  .then(function(response) {
-    return response.json();
-  }).then(function(data) {
-  });
-  fetch('https://cors-anywhere.herokuapp.com/http://signage.krlx.org')
-  .then(function(response) {
-      return response.json();
-  }).then(function(data) {
-  	  info = data;
-	  document.getElementById("songs").innerHTML = displaySongs(info,count);
-  	  document.getElementById("now").innerHTML = currentShow(data);
-  	  recheck();
-  });
-  function displaySongs(data,count) {
-  	var songs = data.songs;
-  	var i = 0;
-  	var songtext = "";
-  	while(i < count) {
-  		songtext = songtext + songs[i].title + " by " + songs[i].artist + "<br>";
-  		i++;
-  	}
-  	return songtext;
-  }
-  function recheck() {
-  	setInterval(function() {
-  	fetch('https://cors-anywhere.herokuapp.com/http://signage.krlx.org')
-	  .then(function(response) {
-	    return response.json();
-	  }).then(function(data) {
-	  	  info = data;
-	  });
-  	var tempsave = displaySongs(info,count);
-  	console.log(tempsave);
-  	console.log(currentSongs);
-  	if(tempsave.localeCompare(currentSongs)!= 0){
-  		console.log("yes")
-  		currentSongs = tempsave;
-  		document.getElementById("songs").innerHTML = currentSongs;
-  		}
-	}, 10000);
-	}
-	function currentShow(data) {
-		var djs = "";
-		for (var i = data.now.djs.length - 1; i >= 0; i--) {
-			djs = djs + " " + data.now.djs[i];
-		}
-		var djtext =  djs + '<h2 style="padding: 0px;margin: 0px;" class="dogood">'+ data.now.title + "</h2>";
-  	return djtext;
-  }
-  function newshowCheck() {
-	  
-  	var tempsave = displaySongs(info,count);
-  	if(tempsave != currentSongs){
-  		currentSongs = tempsave;
-  		document.getElementById("songs").innerHTML = currentSongs;
-  		}
-	}
-	</script>
 </head>
 <body>
 <div style="  width: 100%;
 ">
 <div style="position:fixed;">
 	<marquee direction="up" style="text-align: center; " scrollamount="1.65">
-		<h3 class="dogood" id="songs"></h3>
+		<a class="nohoverordec" onclick="playAudio()"><h3 class="dogood" id="songs"></h3></a>
 	</marquee>
 	<marquee direction="down" style="text-align: left; " scrollamount="1.65">
-		<h2 class="dogood" id="now"></h2>
+		<a class="nohoverordec" onclick="playAudio()"><h2 class="dogood" id="now"></h2></a>
 	</marquee>
 </div>
 
