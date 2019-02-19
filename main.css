@@ -10,15 +10,17 @@ body {
 }
 
 a:hover {
-  text-decoration: underline wavy;
-  unde
+  text-decoration: overline dotted;
 }
 
 a {
   color: transparent;
   -webkit-text-stroke: 1px var(--mainColor);
 }
-
+.dogood {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--mainColor);
+  }
 .full {
   width: 100%;
 }

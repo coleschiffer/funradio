@@ -8,54 +8,100 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<script type="text/javascript" src="script.js"></script>
 	<script type="text/javascript">
-fetch('http://mc.krlx.org/api/v1/schedule/signage',{ headers: {
-    'Access-Control-Allow-Credentials' : true,
-    'Access-Control-Allow-Origin':'*',
-    'Access-Control-Allow-Methods':'GET',
-    'Access-Control-Allow-Headers':'application/json'
-  }}).then(function(response) {
-	console.log(response);
-}).catch(function(err) {
-    // Error :(
-});
+var info;
+var count = 5;
+var currentSongs = "";
+var currentDjs = "";
+fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
+  .then(function(response) {
+    return response.json();
+  }).then(function(data) {
+  });
+  fetch('https://cors-anywhere.herokuapp.com/http://signage.krlx.org')
+  .then(function(response) {
+   
+    return response.json();
+  }).then(function(data) {
+  	info = data;
+  	  setInterval(recheck(), 60);
+  });
+  function displaySongs(data,count) {
+  	var songs = data.songs;
+  	var i = 0;
+  	var songtext = "";
+  	while(i < count) {
+  		songtext = songtext + (i+1) + ".  " + songs[i].title + " by " + songs[i].artist + "<br>";
+  		i++;
+  	}
+  	return songtext;
+  }
+  function recheck() {
+  	var tempsave = displaySongs(info,count);
+  	if(tempsave.localeCompare(currentSongs)!=0){
+  		console.log("yes")
+  		currentSongs = tempsave;
+  		document.getElementById("songs").innerHTML = currentSongs;
+  		}
+	}
+	function displayShows(data) {
+
+  	return djtext;
+  }
+  function recheck() {
+  	var tempsave = displaySongs(info,count);
+  	if(tempsave != currentSongs){
+  		currentSongs = tempsave;
+  		document.getElementById("songs").innerHTML = currentSongs;
+  		}
+	}
 	</script>
 </head>
 <body>
-<div class="shows">
-		<marquee>
-	<div></div>
-</marquee>
-</div>
 <div style="  width: 100%;
 ">
-     <marquee><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
+<div style="position:fixed;">
+	<marquee direction="up" style="text-align: center; " scrollamount="1.65">
+		<h3 class="dogood" id="songs"></h3>
+	</marquee>
+	<marquee direction="down" style="text-align: center; " scrollamount="1.65">
+		<h3 class="dogood" id="dj"></h3>
+	</marquee>
+</div>
+
+
+     <marquee *><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
       <br>
       
-      <marquee direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
+      <marquee * direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
 </h1></marquee>
 <br>
-       <marquee><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
+       <marquee * ><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
       <br>
       
-      <marquee direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
+      <marquee * direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
 </h1></marquee>
 <br>
-     <marquee><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
+     <marquee *><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
       <br>
       
-      <marquee direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
+      <marquee * direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
 </h1></marquee>
 <br>
-     <marquee><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
+     <marquee *><h1><a class="all" onclick="playAudio()">play the radio</a></h1></marquee>
       <br>
       
-      <marquee direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
+      <marquee * direction="right"><h1><a class="all" onclick="playAudio()">play the radio</a>
 </h1></marquee>
 <br>   
 
     </div>
-<div></div>
-<a class="stop" id="stopper" onclick="pauseAudio()" style="display: none;">pause the radio</a>
+<div><a class="stop" id="louder" onclick="louder()" style="display: none; font-size: 1em;">louder</a>
+	<br>
+<a class="stop" id="stopper" onclick="pauseAudio()" style="display: none;">pause</a>
+<br>
+<a class="stop" id="quieter" onclick="quieter()" style="display: none;font-size: 1em;">quieter</a>
+</div>
+
 
 </body>
 </html>
