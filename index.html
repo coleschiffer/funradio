@@ -19,13 +19,12 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
   });
   fetch('https://cors-anywhere.herokuapp.com/http://signage.krlx.org')
   .then(function(response) {
-   
-    return response.json();
+      return response.json();
   }).then(function(data) {
-  	info = data;
-  	console.log(data);
-  	  setInterval(recheck(), 60);
+  	  info = data;
+	  document.getElementById("songs").innerHTML = displaySongs(info,count);
   	  document.getElementById("now").innerHTML = currentShow(data);
+  	  recheck();
   });
   function displaySongs(data,count) {
   	var songs = data.songs;
@@ -38,6 +37,7 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
   	return songtext;
   }
   function recheck() {
+  	setInterval(function() {
   	fetch('https://cors-anywhere.herokuapp.com/http://signage.krlx.org')
 	  .then(function(response) {
 	    return response.json();
@@ -45,11 +45,14 @@ fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/si
 	  	  info = data;
 	  });
   	var tempsave = displaySongs(info,count);
+  	console.log(tempsave);
+  	console.log(currentSongs);
   	if(tempsave.localeCompare(currentSongs)!= 0){
   		console.log("yes")
   		currentSongs = tempsave;
   		document.getElementById("songs").innerHTML = currentSongs;
   		}
+	}, 10000);
 	}
 	function currentShow(data) {
 		var djs = "";
