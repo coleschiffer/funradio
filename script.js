@@ -50,6 +50,7 @@ function recheck() {
 	}
 	if(End[0]<=currentD.hours &&End[1]<=currentD.minutes) {
 	  shows = currentShow(info);
+	  document.documentElement.style.setProperty('--mainColor', colors[Math.floor(Math.random()*colors.length)]);
   	  document.getElementById("now").innerHTML = shows[0];
   	  document.getElementById("next").innerHTML = shows[1];
 	}
