@@ -2,7 +2,9 @@ var info;
 var count = 5;
 var currentSongs = "";
 var currentDjs = "";
+var End;
 var live = true;
+var currentD = new Date();
 function start() {
 	fetch('https://cors-anywhere.herokuapp.com/http://mc.krlx.org/api/v1/schedule/signage')
   .then(function(response) {
@@ -45,7 +47,12 @@ function recheck() {
 	if(tempsave.localeCompare(currentSongs)!= 0){
 		currentSongs = tempsave;
 		document.getElementById("songs").innerHTML = currentSongs;
-		}
+	}
+	if(End[0]<=currentD.hours &&End[1]<=currentD.minutes) {
+	  shows = currentShow(info);
+  	  document.getElementById("now").innerHTML = shows[0];
+  	  document.getElementById("next").innerHTML = shows[1];
+	}
 }, 30000);
 }
 function currentShow(data) {
@@ -54,7 +61,7 @@ function currentShow(data) {
 	for (var i = data.now.djs.length - 1; i >= 0; i--) {
 		djs = djs + " " + data.now.djs[i];
 	}
-	djs
+	End = data.now.end.split(":");
 	djtext[0] = '<h2 style="padding: 0px;margin: 0px;" class="dogood"><h2 style="padding: 0px;margin: 0px;"" class="dogood">' + data.now.title + "</h2>"+ djs + "<br><em>now - " + display24HourTimeAs12Hour(data.now.end) + "</em></h2>";
 	djs = "";
 	for (var i = data.next[0].djs.length - 1; i >= 0; i--) {
