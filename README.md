@@ -4,6 +4,7 @@ A fun way to listen to KRLX and express my love of &lt;marquee>. Tune into my sh
 ## [listen now, using a old domain that I had (beans.church)](https://beans.church)
 
 ### Lots of new features coming as I get distracted from school work.
-- Remind people about shows
+- make code less hacky
+- add notifications to remind people about shows
 - anarchy radio
 - more things
