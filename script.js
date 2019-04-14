@@ -15,10 +15,10 @@ function start() {
   .then(function(response) {
       return response.json();
   }).then(function(data) {
-  	console.log(data);
+  		console.log(data);
   	  info = data;
   	  var shows = currentShow(info);
-	  document.getElementById("songs").innerHTML = displaySongs(info,count);
+	  	document.getElementById("songs").innerHTML = displaySongs(info,count);
   	  document.getElementById("now").innerHTML = shows[0];
   	  document.getElementById("next").innerHTML = shows[1];
   	  recheck();
@@ -48,11 +48,11 @@ function recheck() {
 		currentSongs = tempsave;
 		document.getElementById("songs").innerHTML = currentSongs;
 	}
-	if(End[0]<=currentD.hours &&End[1]<=currentD.minutes) {
+	if(End[0]<= currentD.getHours() && End[1]<= currentD.getMinutes()) {
 	  shows = currentShow(info);
 	  document.documentElement.style.setProperty('--mainColor', colors[Math.floor(Math.random()*colors.length)]);
-  	  document.getElementById("now").innerHTML = shows[0];
-  	  document.getElementById("next").innerHTML = shows[1];
+  	document.getElementById("now").innerHTML = shows[0];
+  	document.getElementById("next").innerHTML = shows[1];
 	}
 }, 30000);
 }
@@ -65,6 +65,14 @@ function currentShow(data) {
 	End = data.now.end.split(":");
 	djtext[0] = '<h2 style="padding: 0px;margin: 0px;" class="dogood"><h2 style="padding: 0px;margin: 0px;"" class="dogood">' + data.now.title + "</h2>"+ djs + "<br><em>now - " + display24HourTimeAs12Hour(data.now.end) + "</em></h2>";
 	djs = "";
+	if (data.next[0].id == "TRACK-4") {
+		data.next[0].start = "17:00";
+		data.next[0].end = "19:00";
+	}
+	if (data.next[1].id == "TRACK-4") {
+		data.next[1].start = "17:00";
+		data.next[1].end = "19:00";
+	}
 	for (var i = data.next[0].djs.length - 1; i >= 0; i--) {
 		djs = djs + " " + data.next[0].djs[i];
 	}
@@ -77,7 +85,7 @@ function currentShow(data) {
 	return djtext;
 }
 function newshowCheck() {
-  
+
 	var tempsave = displaySongs(info,count);
 	if(tempsave != currentSongs){
 		currentSongs = tempsave;
@@ -129,7 +137,7 @@ function display24HourTimeAs12Hour(time) {
 	var pm = false;
 	var timeComponents = time.split(":");
 	var hour = parseInt(timeComponents[0]);
-	
+
 	if(hour >= 24) hour -= 24;
 	if(hour >= 12) {
 		pm = true;
@@ -137,7 +145,7 @@ function display24HourTimeAs12Hour(time) {
 	}
 	if(hour == 0) hour = 12;
 	timeComponents[0] = hour.toString();
-	
+
 	var returnString = timeComponents.join(":");
 	return returnString + " " + (pm ? "pm" : "am");
 }
